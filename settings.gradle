@@ -4,3 +4,5 @@ pluginManagement {
 	}
 }
 rootProject.name = 'petclinic'
+include ':petclinic-web'
+include ':petclinic-data'
