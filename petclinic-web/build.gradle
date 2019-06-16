@@ -1,11 +1,53 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'ro.isdc.wro4j.gradle:wro4j-gradle-plugin:1.8.0.Beta4'
+    }
+}
+
+ext {
+    versionJQuery = '2.1.4'
+    versionBootstrap = '3.3.4'
+}
+
+apply plugin: 'java'
+apply plugin: 'wro4j'
+
 dependencies {
     compileOnly 'org.projectlombok:lombok'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator',
+            'org.springframework.boot:spring-boot-starter-thymeleaf',
+            'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compile project(':petclinic-data')
+    webjars "org.webjars:jquery:${versionJQuery}",
+            "org.webjars:bootstrap:${versionBootstrap}"
+}
+
+webResources {
+    bundle ('core') {
+        js 'js/**/*.js'
+        preProcessor 'jsMin'
+    }
+
+    bundle ('libs') {
+        js "webjars/jquery/$versionJQuery/jquery.min.js"
+        preProcessor 'jsMin'
+    }
+
+    bundle ('petclinic') {
+        css "webjars/bootstrap/$versionJQuery/less/bootstrap.less"
+        css 'less/**/*.less'
+        preProcessor 'less4j', 'cssMin'
+        cssRewriteUrl()
+    }
+
+    assets {
+        include 'fonts/**', 'images/**'
+    }
 }
 
 bootJar {
