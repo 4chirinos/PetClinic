@@ -1,0 +1,30 @@
+{
+  "name": "petclinic-web",
+  "version": "1.0.0",
+  "description": "petclinic web project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4chirinos/PetClinic.git"
+  },
+  "keywords": [
+    "spring5",
+    "springboot",
+    "thymeleaf",
+    "npm"
+  ],
+  "author": "4chirinos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/4chirinos/PetClinic/issues"
+  },
+  "homepage": "https://github.com/4chirinos/PetClinic#readme",
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-less": "^2.0.0",
+    "jit-grunt": "^0.10.0"
+  }
+}

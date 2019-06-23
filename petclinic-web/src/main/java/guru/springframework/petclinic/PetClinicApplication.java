@@ -18,9 +18,9 @@ public class PetClinicApplication {
 	@Bean
 	public CommandLineRunner run(ApplicationContext appContext) {
 		return args -> {
-			System.out.println("Beans already created by SpringBoot:");
+			//System.out.println("Beans already created by SpringBoot:");
 			String[] beans = appContext.getBeanDefinitionNames();
-			Arrays.stream(beans).sorted().forEach(System.out::println);
+			//Arrays.stream(beans).sorted().forEach(System.out::println);
 		};
 	}
 

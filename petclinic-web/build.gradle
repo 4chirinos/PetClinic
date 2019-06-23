@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'ro.isdc.wro4j.gradle:wro4j-gradle-plugin:1.8.0.Beta4'
+        classpath 'de.obqo.gradle:gradle-lesscss-plugin:1.0-1.3.3'
     }
 }
 
@@ -13,7 +13,7 @@ ext {
 }
 
 apply plugin: 'java'
-apply plugin: 'wro4j'
+apply plugin: 'lesscss'
 
 dependencies {
     compileOnly 'org.projectlombok:lombok'
@@ -23,37 +23,26 @@ dependencies {
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compile project(':petclinic-data')
-    webjars "org.webjars:jquery:${versionJQuery}",
-            "org.webjars:bootstrap:${versionBootstrap}"
 }
 
-webResources {
-    bundle ('core') {
-        js 'js/**/*.js'
-        preProcessor 'jsMin'
-    }
-
-    bundle ('libs') {
-        js "webjars/jquery/$versionJQuery/jquery.min.js"
-        preProcessor 'jsMin'
-    }
-
-    bundle ('petclinic') {
-        css "webjars/bootstrap/$versionJQuery/less/bootstrap.less"
-        css 'less/**/*.less'
-        preProcessor 'less4j', 'cssMin'
-        cssRewriteUrl()
-    }
-
-    assets {
-        include 'fonts/**', 'images/**'
+task moveFonts {
+    copy {
+        from 'src/main/webResources/lib/bootstrap/3.3.4/fonts'
+        into "$projectDir/src/main/resources/static/fonts"
     }
 }
+
+task compileLess(type: Exec) {
+    commandLine './node_modules/.bin/grunt', '--gruntfile', 'src/main/webResources/Gruntfile.js', 'less'
+}
+
+task prepareWebResources dependsOn compileLess, moveFonts
 
 bootJar {
     enabled = false
 }
 
 jar {
+    dependsOn prepareWebResources
     enabled = true
 }
