@@ -1,7 +1,12 @@
 package guru.springframework.petclinic.services.map;
 
 import guru.springframework.petclinic.models.Owner;
+import guru.springframework.petclinic.models.Pet;
+import guru.springframework.petclinic.models.PetType;
 import guru.springframework.petclinic.services.OwnerService;
+import guru.springframework.petclinic.services.PetService;
+import guru.springframework.petclinic.services.PetTypeService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -10,6 +15,15 @@ import java.util.Set;
 
 @Service
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
+
+    private final PetTypeService petTypeService;
+    private final PetService petService;
+
+    public OwnerServiceMap(PetTypeService petTypeService, PetService petService) {
+        this.petTypeService = petTypeService;
+        this.petService = petService;
+    }
+
     @Override
     public Set<Owner> findAll() {
         return super.findAll();
@@ -22,7 +36,11 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner save(Owner owner) {
-        return super.save(owner);
+        if (owner != null) {
+            syncBeforeSave(owner);
+            return super.save(owner);
+        }
+        return null;
     }
 
     @Override
@@ -40,5 +58,21 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
         List<Owner> owners = new LinkedList<>(super.findAll());
         Owner owner = owners.stream().filter(o -> o.getLastName().equals(lastName)).findFirst().orElse(null);
         return owner;
+    }
+
+    private void syncBeforeSave(Owner owner) {
+        CollectionUtils.emptyIfNull(owner.getPets()).forEach(pet -> {
+            PetType petType = pet.getPetType();
+            if (petType == null) {
+                throw new RuntimeException("Pet Type is required");
+            }
+            if (petType.getId() == null) {
+                pet.setPetType(petTypeService.save(petType));
+            }
+            if (pet.getPetType() == null) {
+                Pet savedPet = petService.save(pet);
+                pet.setId(savedPet.getId());
+            }
+        });
     }
 }
