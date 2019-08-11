@@ -5,10 +5,10 @@ import guru.springframework.petclinic.models.Pet;
 import guru.springframework.petclinic.models.PetType;
 import guru.springframework.petclinic.models.Speciality;
 import guru.springframework.petclinic.models.Vet;
-import guru.springframework.petclinic.services.OwnerService;
-import guru.springframework.petclinic.services.PetTypeService;
-import guru.springframework.petclinic.services.SpecialityService;
-import guru.springframework.petclinic.services.VetService;
+import guru.springframework.petclinic.repository.map.OwnerRepository;
+import guru.springframework.petclinic.repository.map.PetTypeRepository;
+import guru.springframework.petclinic.repository.map.SpecialityRepository;
+import guru.springframework.petclinic.repository.map.VetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,13 +19,13 @@ import java.time.LocalDate;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private final OwnerService ownerService;
-    private final VetService vetService;
-    private final PetTypeService petTypeService;
-    private final SpecialityService specialityService;
+    private final OwnerRepository ownerService;
+    private final VetRepository vetService;
+    private final PetTypeRepository petTypeService;
+    private final SpecialityRepository specialityService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
-                      SpecialityService specialityService) {
+    public DataLoader(OwnerRepository ownerService, VetRepository vetService, PetTypeRepository petTypeService,
+                      SpecialityRepository specialityService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;

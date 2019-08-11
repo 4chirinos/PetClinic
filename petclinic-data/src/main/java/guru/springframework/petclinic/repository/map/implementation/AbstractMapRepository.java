@@ -1,4 +1,4 @@
-package guru.springframework.petclinic.services.map;
+package guru.springframework.petclinic.repository.map.implementation;
 
 import guru.springframework.petclinic.models.BaseEntity;
 
@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
+abstract class AbstractMapRepository<T extends BaseEntity, ID extends Long> {
 
     private Map<Long, T> map = new HashMap<>();
 

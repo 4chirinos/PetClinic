@@ -1,11 +1,11 @@
-package guru.springframework.petclinic.services.map;
+package guru.springframework.petclinic.repository.map.implementation;
 
 import guru.springframework.petclinic.models.Owner;
 import guru.springframework.petclinic.models.Pet;
 import guru.springframework.petclinic.models.PetType;
-import guru.springframework.petclinic.services.OwnerService;
-import guru.springframework.petclinic.services.PetService;
-import guru.springframework.petclinic.services.PetTypeService;
+import guru.springframework.petclinic.repository.map.OwnerRepository;
+import guru.springframework.petclinic.repository.map.PetRepository;
+import guru.springframework.petclinic.repository.map.PetTypeRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
+public class OwnerMapRepository extends AbstractMapRepository<Owner, Long> implements OwnerRepository {
 
-    private final PetTypeService petTypeService;
-    private final PetService petService;
+    private final PetTypeRepository petTypeService;
+    private final PetRepository petService;
 
-    public OwnerMapService(PetTypeService petTypeService, PetService petService) {
+    public OwnerMapRepository(PetTypeRepository petTypeService, PetRepository petService) {
         this.petTypeService = petTypeService;
         this.petService = petService;
     }
