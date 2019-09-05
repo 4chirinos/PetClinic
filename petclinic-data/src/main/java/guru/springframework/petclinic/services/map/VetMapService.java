@@ -1,20 +1,20 @@
-package guru.springframework.petclinic.repository.map.implementation;
+package guru.springframework.petclinic.services.map;
 
 import guru.springframework.petclinic.models.Speciality;
 import guru.springframework.petclinic.models.Vet;
-import guru.springframework.petclinic.repository.map.SpecialityRepository;
-import guru.springframework.petclinic.repository.map.VetRepository;
+import guru.springframework.petclinic.services.SpecialityService;
+import guru.springframework.petclinic.services.VetService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
-public class VetMapRepository extends AbstractMapRepository<Vet, Long> implements VetRepository {
+public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
 
-    private final SpecialityRepository specialityService;
+    private final SpecialityService specialityService;
 
-    public VetMapRepository(SpecialityRepository specialityService) {
+    public VetMapService(SpecialityService specialityService) {
         this.specialityService = specialityService;
     }
 

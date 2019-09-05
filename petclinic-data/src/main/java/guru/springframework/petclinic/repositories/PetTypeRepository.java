@@ -1,4 +1,4 @@
-package guru.springframework.petclinic.repository.jpa;
+package guru.springframework.petclinic.repositories;
 
 import guru.springframework.petclinic.models.PetType;
 import org.springframework.data.repository.CrudRepository;

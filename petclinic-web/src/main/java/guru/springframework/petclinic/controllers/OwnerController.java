@@ -1,6 +1,6 @@
 package guru.springframework.petclinic.controllers;
 
-import guru.springframework.petclinic.repository.map.OwnerRepository;
+import guru.springframework.petclinic.services.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/owners")
 public class OwnerController {
 
-    private final OwnerRepository ownerService;
+    private final OwnerService ownerService;
 
-    public OwnerController(OwnerRepository ownerService) {
+    public OwnerController(OwnerService ownerService) {
         this.ownerService = ownerService;
     }
 
