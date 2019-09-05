@@ -5,10 +5,12 @@ import guru.springframework.petclinic.models.Pet;
 import guru.springframework.petclinic.models.PetType;
 import guru.springframework.petclinic.models.Speciality;
 import guru.springframework.petclinic.models.Vet;
+import guru.springframework.petclinic.models.Visit;
 import guru.springframework.petclinic.services.OwnerService;
 import guru.springframework.petclinic.services.PetTypeService;
 import guru.springframework.petclinic.services.SpecialityService;
 import guru.springframework.petclinic.services.VetService;
+import guru.springframework.petclinic.services.VisitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -23,13 +25,15 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
 
     public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
-                      SpecialityService specialityService) {
+                      SpecialityService specialityService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -91,6 +95,11 @@ public class DataLoader implements CommandLineRunner {
         fionaCat.setName("Rosco");
         o2.getPets().add(fionaCat);
 
+        Visit catVisit = new Visit();
+        catVisit.setPet(fionaCat);
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Sneezy kitty");
+
         Vet v1 = new Vet();
         v1.setFirstName("Sam");
         v1.setLastName("Axe");
@@ -107,5 +116,7 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(v1);
         vetService.save(v2);
         log.info("Loaded vets");
+        visitService.save(catVisit);
+        log.info("Loaded visits");
     }
 }
